@@ -1,0 +1,28 @@
+.primary-color{
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #383838;
+    -fx-prompt-text-fill: #383838;
+    -fx-fill: #383838;
+    -fx-text-inner-color: #383838;
+    -fx-control-inner-background: #FFFFFF;
+    -fx-stroke: black;
+}
+
+.secondary-color{
+    -fx-background-color: #E7E7E7;
+    -fx-text-fill: #383838;
+    -fx-prompt-text-fill: #383838;
+    -fx-fill: #383838;
+    -fx-text-inner-color: #383838;
+    -fx-control-inner-background: #FFFFFF;
+    -fx-stroke: black;
+}
+
+.combo-box {
+    -fx-background-color: #E7E7E7;
+    -fx-text-fill: black;
+}
+
+.round-border{
+    -fx-background-radius: 100;
+}

@@ -1,0 +1,13 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/home/pipemun/Documents/mintic/ciclo2-java/javafx-sdk-16/lib/javafx-swt.jar",
+        "/home/pipemun/Documents/mintic/ciclo2-java/javafx-sdk-16/lib/javafx.web.jar",
+        "/home/pipemun/Documents/mintic/ciclo2-java/javafx-sdk-16/lib/javafx.swing.jar",
+        "/home/pipemun/Documents/mintic/ciclo2-java/javafx-sdk-16/lib/javafx.media.jar",
+        "/home/pipemun/Documents/mintic/ciclo2-java/javafx-sdk-16/lib/javafx.graphics.jar",
+        "/home/pipemun/Documents/mintic/ciclo2-java/javafx-sdk-16/lib/javafx.fxml.jar",
+        "/home/pipemun/Documents/mintic/ciclo2-java/javafx-sdk-16/lib/javafx.controls.jar",
+        "/home/pipemun/Documents/mintic/ciclo2-java/javafx-sdk-16/lib/javafx.base.jar"
+    ]
+}

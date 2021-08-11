@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -56,21 +57,45 @@ public class GUIreto3Controller {
     @FXML
     private ComboBox<String> typewatercbx;
 
+    ArrayList<CuerpoDeAgua> bodiesOfWater = new ArrayList<CuerpoDeAgua>();
+
     @FXML
     public void addClick(MouseEvent event) {
-        String name = nametxt.getText();
-        String id = idtxt.getText();
-        String town = towntxt.getText();
+        outputtxt.setText("");
+        String name = nametxt.getText().strip();
+        String town = towntxt.getText().strip();
         String typewater = typewatercbx.getValue();
         String sweet = sweetcbx.getValue();
-        String irca = ircatxt.getText();
-        if (name.strip().isEmpty() || id.strip().isEmpty() || town.strip().isEmpty() || typewater.strip().isEmpty() || irca.strip().isEmpty()) {
+        String irca;
+        String id;
+        int next = 0;
+        
+        try {
+            id = idtxt.getText().strip();
+            next = Integer.parseInt(id) + 1;
+        } catch (Exception e) {
+            statustxt.setText("Id debe ser un numero entero");
+            id = null;
+            idtxt.setText("");
+        }
+
+        try {
+            irca = ircatxt.getText().strip();
+            double ircaTest = Double.parseDouble(irca);
+        } catch (Exception e) {
+            statustxt.setText("IRCA debe ser un numero real");
+            irca = null;
+            ircatxt.setText("");
+        }
+
+        if (name.isEmpty() || id.isEmpty() || town.isEmpty() || irca.isEmpty()) {
             statustxt.setText("Por favor, llene todos los campos del formulario");
         } else {
-            addareatxt.setText(addareatxt.getText() + name + " " + id + " " + town + " " + sweet + " " + typewater + " " + irca + "\n");
+            addareatxt.setText(addareatxt.getText() + name + "-" + id + "-" + town + "-" + sweet + "-" + typewater + "-" + irca + "\n");
+            CuerpoDeAgua tempBody = new CuerpoDeAgua(name, Integer.parseInt(id), town, typewater, sweetCheck(sweet), Double.parseDouble(irca));
+            bodiesOfWater.add(tempBody);
             statustxt.setText("");
             nametxt.setText("");
-            int next = Integer.parseInt(id) + 1;
             idtxt.setText(String.valueOf(next));
             towntxt.setText("");
             ircatxt.setText("");
@@ -80,37 +105,27 @@ public class GUIreto3Controller {
     @FXML
     public void runClick(MouseEvent event) {
         outputtxt.setText("");
-        String[] lines = addareatxt.getText().split(System.getProperty("line.separator"));
-        CuerpoDeAgua[] bodiesOfWater = new CuerpoDeAgua[lines.length];
         float amountHighAndLow = 0;
         int amountMed = 0;
         double sum = 0;
 
-        for (int i = 0; i < lines.length; i++) {
-            String[] temp = lines[i].split(" ");
-            bodiesOfWater[i] = new CuerpoDeAgua(
-            temp[0],
-            Integer.parseInt(temp[1]),
-            temp[2],
-            temp[3],
-            sweetCheck(temp[4]),
-            Double.parseDouble(temp[5])
-            );
-            String catTemp = bodiesOfWater[i].nivel(bodiesOfWater[i].getIrca());
+        for (int i = 0; i < bodiesOfWater.size(); i++) {
+
+            String catTemp = bodiesOfWater.get(i).nivel(bodiesOfWater.get(i).getIrca());
             if(catTemp == "ALTO" || catTemp == "MEDIO")
             amountHighAndLow++;
-            sum += bodiesOfWater[i].getIrca();
+            sum += bodiesOfWater.get(i).getIrca();
         }
         
-        for (int i = 0; i < lines.length; i++)
-            outputtxt.setText(outputtxt.getText() + bodiesOfWater[i].getName() + "\n");
+        for (int i = 0; i < bodiesOfWater.size(); i++)
+            outputtxt.setText(outputtxt.getText() + bodiesOfWater.get(i).getName() + "\n");
 
         outputtxt.setText(outputtxt.getText() + String.format("%.2f", amountHighAndLow) + "\n");
 
-        for (int i = 0; i < lines.length; i++){
-            String catTemp = bodiesOfWater[i].nivel(bodiesOfWater[i].getIrca());
+        for (int i = 0; i < bodiesOfWater.size(); i++){
+            String catTemp = bodiesOfWater.get(i).nivel(bodiesOfWater.get(i).getIrca());
             if(catTemp == "ALTO"){
-                outputtxt.setText(outputtxt.getText() + bodiesOfWater[i].getName() + " ");
+                outputtxt.setText(outputtxt.getText() + bodiesOfWater.get(i).getName() + " ");
                 amountMed++;
             }
         }
@@ -119,7 +134,7 @@ public class GUIreto3Controller {
             outputtxt.setText(outputtxt.getText() + "NA");
 
         outputtxt.setText(outputtxt.getText() + "\n");
-        outputtxt.setText(outputtxt.getText() + String.format("%.2f", sum / lines.length));
+        outputtxt.setText(outputtxt.getText() + String.format("%.2f", sum / bodiesOfWater.size()));
     }
 
     public static boolean sweetCheck(String typeOfWater){
@@ -128,12 +143,14 @@ public class GUIreto3Controller {
 
     @FXML
     void deleteClick(MouseEvent event) {
+        outputtxt.setText("");
         int lastChangeLine = addareatxt.getText().lastIndexOf("\n");
         int secondLast = addareatxt.getText().lastIndexOf("\n", lastChangeLine - 1);
         if (lastChangeLine == -1 || secondLast == -1) {
             addareatxt.setText("");
         } else {
             addareatxt.setText(addareatxt.getText().substring(0, secondLast + 1));
+            bodiesOfWater.remove(bodiesOfWater.size() - 1);
         }
     }
 
@@ -142,6 +159,9 @@ public class GUIreto3Controller {
         addareatxt.setText("");
         outputtxt.setText("");
         idtxt.setText("0");
+        for(int i = bodiesOfWater.size() - 1; i > -1; i--){
+            bodiesOfWater.remove(i);
+        }
     }
 
     private boolean isLightMode = true;

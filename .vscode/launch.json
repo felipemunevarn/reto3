@@ -13,8 +13,8 @@
         {
             "type": "java",
             "name": "Launch GUIreto3",
-            "request": "launch",
             "vmArgs": "--module-path /home/pipemun/Documents/mintic/ciclo2-java/javafx-sdk-16/lib --add-modules javafx.controls,javafx.fxml",
+            "request": "launch",
             "mainClass": "GUIreto3",
             "projectName": "src_7d128d78"
         },

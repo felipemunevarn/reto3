@@ -66,12 +66,11 @@ public class GUIreto3Controller {
         String town = towntxt.getText().strip();
         String typewater = typewatercbx.getValue();
         String sweet = sweetcbx.getValue();
-        String irca;
-        String id;
+        String irca = ircatxt.getText().strip();;
+        String id = idtxt.getText().strip();
         int next = 0;
         
         try {
-            id = idtxt.getText().strip();
             next = Integer.parseInt(id) + 1;
         } catch (Exception e) {
             statustxt.setText("Id debe ser un numero entero");
@@ -80,15 +79,14 @@ public class GUIreto3Controller {
         }
 
         try {
-            irca = ircatxt.getText().strip();
             double ircaTest = Double.parseDouble(irca);
         } catch (Exception e) {
             statustxt.setText("IRCA debe ser un numero real");
             irca = null;
             ircatxt.setText("");
         }
-
-        if (name.isEmpty() || id.isEmpty() || town.isEmpty() || irca.isEmpty()) {
+        
+        if (name.isEmpty() || id.isEmpty() || town.isEmpty() || irca.isEmpty() || id == null || irca == null) {
             statustxt.setText("Por favor, llene todos los campos del formulario");
         } else {
             addareatxt.setText(addareatxt.getText() + name + "-" + id + "-" + town + "-" + sweet + "-" + typewater + "-" + irca + "\n");
@@ -190,7 +188,7 @@ public class GUIreto3Controller {
     private void setDarkMode() {
         parent.getStylesheets().remove("styles/lightMode.css");
         parent.getStylesheets().add("styles/darkMode.css");
-        Image modeImg = new Image("img/sun.png");
+        Image modeImg = new Image("img/sun-icon.png");
         modetxt.setText("Dark Mode");
         modeimg.setImage(modeImg);
         Image misionImg = new Image("img/misionDark.png");
